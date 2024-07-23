@@ -1,8 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import Arrow from "../common/Arrow"
-import MessageIcon from "../common/MessageIcon"
-import Input from '../component/Input'
+import ArrowCompo from '../component/ArrowCompo'
+
 import { OtpInput } from "react-native-otp-entry";
 import { useNavigation } from '@react-navigation/native'
 
@@ -12,9 +11,7 @@ const VerifyScreen = () => {
     <View style={styles.home}>
       <View style={styles.homeWrapper}>
         <View style={styles.navTop}>
-            <TouchableOpacity style={styles.navTopIcon} activeOpacity={0.6} onPress={() => navigation.goBack() }>
-                <Arrow />
-            </TouchableOpacity>
+            <ArrowCompo />
             <Text style={styles.navTopIcontext}>Verification</Text>
             <Text></Text>
         </View>

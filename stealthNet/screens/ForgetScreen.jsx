@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import Arrow from "../common/Arrow"
 import MessageIcon from "../common/MessageIcon"
 import Input from '../component/Input'
 import { useNavigation } from '@react-navigation/native'
+import ArrowCompo from '../component/ArrowCompo'
 
 const ForgetScreen = () => {
 
@@ -13,9 +13,8 @@ const ForgetScreen = () => {
     <View style={styles.home}>
       <View style={styles.homeWrapper}>
         <View style={styles.navTop}>
-            <TouchableOpacity style={styles.navTopIcon} activeOpacity={0.6} onPress={() => navigation.goBack() }>
-                <Arrow />
-            </TouchableOpacity>
+            <ArrowCompo />
+
             <Text style={styles.navTopIcontext}>Forgot Password</Text>
             <Text></Text>
         </View>

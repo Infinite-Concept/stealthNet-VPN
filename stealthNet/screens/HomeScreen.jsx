@@ -8,6 +8,8 @@ import Map from "../common/Map"
 import Power from "../common/Power"
 import Close from "../common/Close"
 import { Shadow } from 'react-native-shadow-2';
+import { useNavigation } from '@react-navigation/native'
+import RNSimpleOpenvpn, { addVpnStateListener, removeVpnStateListener } from 'react-native-simple-openvpn';
 
 const width = Dimensions.get("window").width
 
@@ -15,13 +17,33 @@ const HomeScreen = () => {
 
     const[connected, setConnected] = useState(false)
     const[showMenu, setShowMenu] = useState(false)
+    const navigation = useNavigation()
+
+    const menuNavigate = (page) => {
+        navigation.navigate(page)
+    }
+
+    async function startOVpn() {
+        try {
+            // await RNSimpleOpenvpn.connect({
+            //     remoteAddress: '192.168.1.1 3000',
+            //     ovpnFileName: 'client',
+            //     assetsPath: 'ovpn/',
+            //     providerBundleIdentifier: 'com.example.RNSimpleOvpnTest.NEOpenVPN',
+            //     localizedDescription: 'RNSimpleOvpn',
+            //   });
+            console.log(removeVpnStateListener());
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
   return (
     <View style={styles.home}>
-        <StatusBar barStyle="light-content" backgroundColor="#3B3A48" />
-        <View style={[styles.homewrapper, {backgroundColor: connected ? "#22156F" : "#3B3A48" }]}>
+        <StatusBar barStyle="light-content" backgroundColor="#0D0D0D" />
+        <View style={[styles.homewrapper, {backgroundColor: connected ? "#1d2e28" : "#0D0D0D" }]}>
             <View style={styles.bg}>
-                <Bgshape color={connected ?  "#674FF78C" : "#444252"} />
+                <Bgshape color={connected ?  "#0f5132" : "#444252"} />
             </View>
 
             <View style={styles.content}>
@@ -31,7 +53,7 @@ const HomeScreen = () => {
 
                 <Text style={styles.notConn}>Not Connected</Text>
 
-                <View style={[styles.conn, {backgroundColor: connected ? "#674FF7" : "#3B3A48",}]}>
+                <View style={[styles.conn, {backgroundColor: connected ? "#18392b" : "#0D0D0D",}]}>
                     <View style={styles.connWra}>
                         <View style={styles.world}>
                             <World />
@@ -51,15 +73,18 @@ const HomeScreen = () => {
 
             <View style={styles.connBtnCon}>
                 <View style={styles.map}>
-                    <Map color={connected ?  "#674FF78C" : "#444252"}  />
+                    <Map color={connected ?  "#0f513299" : "#44425299"}  />
                 </View>
 
                 <View style={{alignItems: "center", justifyContent: "center", paddingBottom: 10}}>
                     <View style={[styles.firstRound, styles.round]}>
                         <View style={[styles.secondRound, styles.round]}>
-                            <Shadow distance={90} startColor={'#674FF766'} >
-                                <TouchableOpacity style={[styles.thirdRound, styles.round, {backgroundColor: connected ?  "#674FF7" : "#444252", borderColor: connected ?  "#816CFF" : "#674FF7" }]} activeOpacity={0.6} onPress={() => setConnected(!connected)}>
-                                    <Power color={connected ?  "#fff" : "#674FF7"} />
+                            <Shadow distance={90} startColor={connected ?'#0f5132' : "#444252"} >
+                                <TouchableOpacity style={[styles.thirdRound, styles.round, {backgroundColor: connected ?  "#14452f" : "#444252", borderColor: connected ?  "#18392b" : "#ffffff" }]} activeOpacity={0.8}
+                                //  onPress={() => setConnected(!connected)}
+                                onPress={() => startOVpn() }
+                                    >
+                                    <Power color="#fff" />
                                 </TouchableOpacity>
                             </Shadow>
                         </View>
@@ -74,19 +99,19 @@ const HomeScreen = () => {
                     <Close />
                 </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => menuNavigate("Profile")}>
                     <Text style={styles.menuText}>Profile</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => menuNavigate("Service")}>
                     <Text style={styles.menuText}>Service</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => menuNavigate("Setting")}>
                     <Text style={styles.menuText}>Settings</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => menuNavigate("Terms")}>
                     <Text style={styles.menuText}>Terms & Conditions</Text>
                 </TouchableOpacity>
 
@@ -128,7 +153,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
-        elevation: 5,
+        elevation: 10,
         flexDirection: "row",
         paddingVertical: 25,
         justifyContent: "space-between",
@@ -168,7 +193,7 @@ const styles = StyleSheet.create({
         borderRadius: 200,
         alignItems: "center",
         justifyContent: "center",
-        borderColor: "#674FF7",
+        borderColor: "#444252",
     },
     firstRound: { 
         width: width - 50,
@@ -205,6 +230,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         paddingHorizontal: 20,
         gap: 40,
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#0D0D0D"
     }
 })
